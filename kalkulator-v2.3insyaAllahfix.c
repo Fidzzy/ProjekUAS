@@ -48,6 +48,15 @@ double inputAngka(const char* pesan);
 void tungguEnter();
 int compareDoubles(const void* a, const void* b);
 
+//Fungsi clr screen
+void clsr{
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
 // Fungsi Kalkulator Utama
 void hitungSederhana();
 void hitungLanjutan();
@@ -165,6 +174,7 @@ void tampilkanJudul(const char* judul) {
 }
 
 int tampilkanMenu(const char* judul, const char* opsi[], int jumlahOpsi) {
+    clsr();
     int pilihan = 0;
     tampilkanJudul(judul);
     for (int i = 0; i < jumlahOpsi; i++) {
