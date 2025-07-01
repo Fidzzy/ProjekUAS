@@ -49,7 +49,7 @@ void tungguEnter();
 int compareDoubles(const void* a, const void* b);
 
 //Fungsi clr screen
-void clsr{
+void clsr (){
     #ifdef _WIN32
         system("cls");
     #else
