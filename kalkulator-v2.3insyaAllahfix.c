@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <math.h>
+#include <math.h> // untuk fungsi matematika seperti pow, sqrt, sin, cos, tan dan deklarasi M_PI
 #include <stdlib.h>
 #include <string.h>
 
@@ -177,14 +177,14 @@ int tampilkanMenu(const char* judul, const char* opsi[], int jumlahOpsi) {
         printf("Input tidak valid. Masukkan angka: ");
         while (getchar() != '\n'); // Membersihkan buffer input
     }
-    while (getchar() != '\n'); // Membersihkan sisa buffer
+    while (getchar() != '\n'); 
     return pilihan;
 }
 
 double inputAngka(const char* pesan) {
     double angka;
     printf("%s", pesan);
-    while (scanf("%lf", &angka) != 1) {
+    while (scanf("%lf", &angka) != 1) { //jika pengguna memasukkan input yang bukan angka maka akan false
         printf("Input tidak valid. Masukkan angka: ");
         while (getchar() != '\n');
     }
@@ -250,9 +250,9 @@ void hitungLanjutan() {
                 break;
             case 2:
                 a = inputAngka("Masukkan angka: ");
-                if (a < 0) printf("Error: Akar kuadrat dari angka negatif tidak terdefinisi.\n");
                 b = inputAngka("Masukkan akar pangkat: ");
-                if (b <= 0) printf("Error: Akar pangkat harus > 0.\n");
+                if (a < 0 && fmod(b, 2.0) == 0) printf("Error: Akar pangkat genap dari angka negatif tak terdefinisi dalam bil real.\n");
+                else if (b < 0) printf("Error: Akar pangkat harus > 0.\n");
                 else { hasil = pow(a, 1.0 / b); printf("Akar pangkat %.2lf dari %.2lf = %.2lf\n", b, a, hasil); }
                 break;
             case 3:
@@ -348,6 +348,7 @@ void konversiSatuan() {
         printf("6. Keluar\n");
         printf("Pilih kategori: ");
         scanf("%d", &pilih);
+        while (getchar() != '\n'); 
 
         switch(pilih) {
             case 1: konversiPanjang(); break;
@@ -357,7 +358,7 @@ void konversiSatuan() {
             case 5: konversiVolume(); break;
             case 6: printf("Keluar dari konversi.\n"); break;
             default: printf("Pilihan tidak valid!\n");
-        }
+        } tungguEnter();
     } while (pilih != 6);
 }
 
@@ -374,6 +375,7 @@ void konversiPanjang() {
         printf("5. Kembali\n");
         printf("Pilih: ");
         scanf("%d", &pilih);
+        while (getchar() != '\n'); 
 
         if (pilih >= 1 && pilih <= 4) {
             printf("Masukkan nilai dalam meter: ");
@@ -385,7 +387,7 @@ void konversiPanjang() {
                 case 3: printf("= %.2f inci\n", k.nilai * 39.3701); break;
                 case 4: printf("= %.2f kaki\n", k.nilai * 3.28084); break;
             }
-        }
+        }tungguEnter();
     } while (pilih != 5);
 }
 
@@ -401,6 +403,7 @@ void konversiMassa() {
         printf("4. Kembali\n");
         printf("Pilih: ");
         scanf("%d", &pilih);
+        while (getchar() != '\n');
 
         if (pilih >= 1 && pilih <= 3) {
             printf("Masukkan nilai dalam kilogram: ");
@@ -411,7 +414,7 @@ void konversiMassa() {
                 case 2: printf("= %.2f pon\n", k.nilai * 2.20462); break;
                 case 3: printf("= %.2f ons\n", k.nilai * 10); break;
             }
-        }
+        } tungguEnter();
     } while (pilih != 4);
 }
 
@@ -427,6 +430,7 @@ void konversiWaktu() {
         printf("4. Kembali\n");
         printf("Pilih: ");
         scanf("%d", &pilih);
+        while (getchar() != '\n');
 
         if (pilih >= 1 && pilih <= 3) {
             printf("Masukkan nilai: ");
@@ -437,7 +441,7 @@ void konversiWaktu() {
                 case 2: printf("= %.2f jam\n", k.nilai / 60); break;
                 case 3: printf("= %.2f hari\n", k.nilai / 24); break;
             }
-        }
+        } tungguEnter();
     } while (pilih != 4);
 }
 
@@ -452,6 +456,7 @@ void konversiSuhu() {
         printf("3. Kembali\n");
         printf("Pilih: ");
         scanf("%d", &pilih);
+        while (getchar() != '\n');
 
         if (pilih == 1 || pilih == 2) {
             printf("Masukkan nilai dalam Celcius: ");
@@ -461,7 +466,7 @@ void konversiSuhu() {
                 printf("= %.2f Fahrenheit\n", (k.nilai * 9/5) + 32);
             else
                 printf("= %.2f Kelvin\n", k.nilai + 273.15);
-        }
+        } tungguEnter();
     } while (pilih != 3);
 }
 
@@ -476,6 +481,7 @@ void konversiVolume() {
         printf("3. Kembali\n");
         printf("Pilih: ");
         scanf("%d", &pilih);
+        while (getchar() != '\n');
 
         if (pilih == 1 || pilih == 2) {
             printf("Masukkan nilai dalam liter: ");
@@ -485,7 +491,7 @@ void konversiVolume() {
                 printf("= %.2f ml\n", k.nilai * 1000);
             else
                 printf("= %.2f galon\n", k.nilai / 3.785);
-        }
+        } tungguEnter();
     } while (pilih != 3);
 }
 
@@ -536,9 +542,9 @@ void hitungMatriks() {
 
 
 Matriks* matriks_buat(int baris, int kolom) {
-    Matriks* m = (Matriks*)malloc(sizeof(Matriks));
+    Matriks* m = (Matriks*)malloc(sizeof(Matriks)); //malloc unutuk mengalokasikan memori untuk struct Matriks  
     m->baris = baris; m->kolom = kolom;
-    m->data = (double**)malloc(baris * sizeof(double*));
+    m->data = (double**)malloc(baris * sizeof(double*)); //calloc untuk mengalokasikan memori untuk array of pointers   
     for (int i = 0; i < baris; i++) {
         m->data[i] = (double*)calloc(kolom, sizeof(double));
     }
@@ -547,9 +553,9 @@ Matriks* matriks_buat(int baris, int kolom) {
 
 void matriks_hapus(Matriks* m) {
     if (m == NULL) return;
-    for (int i = 0; i < m->baris; i++) free(m->data[i]);
+    for (int i = 0; i < m->baris; i++) free(m->data[i]); // free untuk membebaskan memori yang dialokasikan untuk setiap baris
     free(m->data); free(m);
-}
+}// pasangan malloc dan m dta, pasangan malloc dan m
 
 void matriks_isi(Matriks* m, const char* nama) {
     printf("\nInput Elemen untuk %s:\n", nama);
@@ -1067,7 +1073,7 @@ double stdDeviasiKelompok(const Stat_DataKelompok* dataSet) {
 }
 
 // =================================================================================
-// IMPLEMENTASI FUNGSI GEOMETRI (dari kode asli)
+// IMPLEMENTASI FUNGSI GEOMETRI
 // =================================================================================
 
 void geoLuas() {
@@ -1082,7 +1088,7 @@ void geoLuas() {
             case 3: s1 = inputAngka("Masukkan alas: "); s2 = inputAngka("Masukkan tinggi: "); hasil = 0.5 * s1 * s2; printf("Luas Segitiga: %.2lf\n", hasil); break;
             case 4: s1 = inputAngka("Masukkan jari-jari: "); hasil = M_PI * s1 * s1; printf("Luas Lingkaran: %.2lf\n", hasil); break;
             case 5: s1 = inputAngka("Masukkan alas: "); s2 = inputAngka("Masukkan tinggi: "); hasil = s1 * s2; printf("Luas Jajar Genjang: %.2lf\n", hasil); break;
-            case 6: s1 = inputAngka("Masukkan alas: "); s2 = inputAngka("Masukkan tinggi: "); hasil = 0.5 * (s1 + s2) * s2; printf("Luas Trapesium: %.2lf\n", hasil); break;
+            case 6: s1 = inputAngka("Masukkan alas 1: "); s2 = inputAngka("Masukkan alas 2: "); double s3 = inputAngka("Masukkan tinggi: "); hasil = 0.5 * (s1 + s2) * s3; printf("Luas Trapesium: %.2lf\n", hasil); break;
             case 7: s1 = inputAngka("Masukkan diagonal 1: "); s2 = inputAngka("Masukkan diagonal 2: "); hasil = 0.5 * s1 * s2; printf("Luas Layang-layang: %.2lf\n", hasil); break;
             case 8: s1 = inputAngka("Masukkan diagonal 1: "); s2 = inputAngka("Masukkan diagonal 2: "); hasil = 0.5 * s1 * s2; printf("Luas Belah Ketupat: %.2lf\n", hasil); break;
             case 9: return;
@@ -1121,7 +1127,7 @@ void geoKeliling() {
             case 1: s1 = inputAngka("Masukkan sisi: "); hasil = 4 * s1; printf("Keliling Persegi: %.2lf\n", hasil); break;
             case 2: s1 = inputAngka("Masukkan panjang: "); s2 = inputAngka("Masukkan lebar: "); hasil = 2 * (s1 + s2); printf("Keliling Persegi Panjang: %.2lf\n", hasil); break;
             case 3: s1 = inputAngka("Masukkan jari-jari: "); hasil = 2 * M_PI * s1; printf("Keliling Lingkaran: %.2lf\n", hasil); break;
-            case 4: s1 = inputAngka("Masukkan sisi: "); s2 = inputAngka("Masukkan tinggi: "); hasil = 2 * (s1 + s2); printf("Keliling Jajar Genjang: %.2lf\n", hasil); break;
+            case 4: s1 = inputAngka("Masukkan sisi alas: "); s2 = inputAngka("Masukkan sisi miring: "); hasil = 2 * (s1 + s2); printf("Keliling Jajar Genjang: %.2lf\n", hasil); break;
             case 5: s1 = inputAngka("Masukkan sisi 1: "); s2 = inputAngka("Masukkan sisi 2: "); double s3 = inputAngka("Masukkan sisi 3: "); double s4 = inputAngka("Masukkan sisi 4: "); hasil = s1 + s2 + s3 + s4; printf("Keliling Trapesium: %.2lf\n", hasil); break;
             case 6: s1 = inputAngka("Masukkan sisi 1: "); s2 = inputAngka("Masukkan sisi 2: "); double s3_layang = inputAngka("Masukkan sisi 3: "); double s4_layang = inputAngka("Masukkan sisi 4: "); hasil = s1 + s2 + s3_layang + s4_layang; printf("Keliling Layang-layang: %.2lf\n", hasil); break;
             case 7: s1 = inputAngka("Masukkan sisi: "); hasil = 4 * s1; printf("Keliling Belah Ketupat: %.2lf\n", hasil); break;
@@ -1143,7 +1149,7 @@ void geoPermukaan() {
             case 1: s1 = inputAngka("Masukkan sisi: "); hasil = 6 * pow(s1, 2); printf("Luas Permukaan Kubus: %.2lf\n", hasil); break;
             case 2: s1 = inputAngka("Masukkan panjang: "); s2 = inputAngka("Masukkan lebar: "); s3 = inputAngka("Masukkan tinggi: "); hasil = 2 * (s1 * s2 + s1 * s3 + s2 * s3); printf("Luas Permukaan Balok: %.2lf\n", hasil); break;
             case 3: s1 = inputAngka("Masukkan jari-jari: "); s2 = inputAngka("Masukkan tinggi: "); hasil = 2 * M_PI * s1 * (s1 + s2); printf("Luas Permukaan Tabung: %.2lf\n", hasil); break;
-            case 4: s1 = inputAngka("Masukkan jari-jari: "); hasil = 2 * M_PI * pow(s1, 2); printf("Luas Permukaan Kerucut: %.2lf\n", hasil); break;
+            case 4: s1 = inputAngka("Masukkan jari-jari: "); s2 = inputAngka("Masukkan tinggi: "); s3 = sqrt(pow(s1, 2)) + pow(s2, 2); hasil = M_PI * s1 * (s1 + s3); printf("Luas Permukaan Kerucut: %.2lf\n", hasil); break;
             case 5: s1 = inputAngka("Masukkan jari-jari: "); hasil = 4 * M_PI * pow(s1, 2); printf("Luas Permukaan Bola: %.2lf\n", hasil); break;
             case 6: return;
             default: printf("Pilihan tidak valid.\n"); break;
